@@ -27,9 +27,8 @@ public class Client {
                     while(true) {
                         try {
                             figuresBuffer = (List<Figure>) in.readObject();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (ClassNotFoundException e) {
+                            System.out.println("got from server");
+                        } catch (IOException | ClassNotFoundException e) {
                             e.printStackTrace();
                         }
                     }
@@ -47,6 +46,7 @@ public class Client {
         try {
             out.writeObject(list);
             out.flush();
+            System.out.println("Sent to server");
         } catch (IOException e) {
             e.printStackTrace();
         }

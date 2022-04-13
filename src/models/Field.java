@@ -55,22 +55,26 @@ public class Field {
         if(newFigure != null) {
             figures.add(newFigure);
             newFigure = null;
+            Client.send(figures);
         }
         if(deleteX != -10000 && deleteY != -10000) {
             for(int i = figures.size() - 1; i > -1; i--) {
                 if(figures.get(i).isBelong(deleteX, deleteY)) {
                     figures.get(i).isAnimating = false;
                     figures.remove(i);
+                    Client.send(figures);
                     break;
                 }
             }
             deleteX = -10000;
             deleteY = -10000;
+
         }
         if(switchX != -10000 && switchY != -10000) {
             for(int i = figures.size() - 1; i > -1; i--) {
                 if(figures.get(i).isBelong(switchX, switchY)) {
                     figures.get(i).switchAnimation();
+                    Client.send(figures);
                     break;
                 }
             }
@@ -81,6 +85,7 @@ public class Field {
             for(int i = figures.size() - 1; i > -1; i--) {
                 if(figures.get(i).isBelong(changeSpeedX, changeSpeedY)) {
                     figures.get(i).changeAnimationSpeed(speedChanges);
+                    Client.send(figures);
                     break;
                 }
             }
@@ -92,12 +97,14 @@ public class Field {
             for(int i = figures.size() - 1; i > -1; i--) {
                 figures.get(i).stopAnimation();
             }
+            Client.send(figures);
             isStopAnimation = false;
         }
         if(isStartAnimation) {
             for(int i = figures.size() - 1; i > -1; i--) {
                 figures.get(i).startAnimation();
             }
+            Client.send(figures);
             isStartAnimation = false;
         }
         if(saveName != null) {
@@ -130,7 +137,6 @@ public class Field {
             figure.countVertices();
         }
 
-        Client.send(figures);
     }
 
     public static void mouseAction(float x, float y, int button) {
